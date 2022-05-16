@@ -1,6 +1,6 @@
 def getSrc() {
     echo "getting the sources..."
-    rm -rf .//*
+    sh 'rm -rf ./*'
     sh 'git clone https://gitlab.com/nanuchi/java-maven-app.git .'
 }
 
