@@ -16,7 +16,7 @@ def buildImage() {
         sh 'ls -la'
         sh 'docker build -t 192.168.88.14:8083/java-maven-app:4.0 .'
         sh "echo $PASS | docker login -u $USER --password-stdin 192.168.88.14:8083"
-        sh 'docker push 192.168.88.14:8083/java-maven-app:3.0'
+        sh 'docker push 192.168.88.14:8083/java-maven-app:4.0'
     }
 }
 
