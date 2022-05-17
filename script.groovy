@@ -1,5 +1,6 @@
 def getSrc() {
     echo "getting the sources..."
+    sh 'rm -rf ./project'
     sh 'git clone -b jenkins-jobs https://gitlab.com/nanuchi/java-maven-app.git ./project'
     sh 'cd ./project'
 }
