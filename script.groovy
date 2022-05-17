@@ -1,22 +1,23 @@
-def getSrc(PROJECT_PATH) {
+def getSrc(projectPath) {
     echo "getting the sources..."
-    echo "${PROJECT_PATH}"
-    sh "rm -rf ${PROJECT_PATH}"
-    sh "git clone -b jenkins-jobs https://gitlab.com/nanuchi/java-maven-app.git ${PROJECT_PATH}"
+    sh "rm -rf ${projectPath}"
+    sh "git clone -b jenkins-jobs https://gitlab.com/nanuchi/java-maven-app.git ${projectPath}"
 }
 
-def buildJar(PROJECT_PATH) {
+def buildJar(projectPath) {
     echo "building the app..."
-    sh "mvn package -f ${PROJECT_PATH}"
+    sh "mvn package -f ${projectPath}"
 }
 
-def buildImage(PROJECT_PATH) {
+def buildImage(String repName, String imgName, String projectPath) {
     echo "building the docker image..."
     withCredentials([usernamePassword(credentialsId: 'nexus-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-        sh 'ls -la'
-        sh "docker build -t 192.168.88.14:8083/java-maven-app:4.0 ${PROJECT_PATH}"
-        sh "echo $PASS | docker login -u $USER --password-stdin 192.168.88.14:8083"
-        sh 'docker push 192.168.88.14:8083/java-maven-app:4.0'
+        //sh "docker build -t 192.168.88.14:8083/java-maven-app:4.0 ${projectPath}"
+        //sh "echo $PASS | docker login -u $USER --password-stdin 192.168.88.14:8083"
+        //sh 'docker push 192.168.88.14:8083/java-maven-app:4.0'
+        sh "docker build -t ${repName}/${imgName} ${projectPath}"
+        sh "echo $PASS | docker login -u $USER --password-stdin ${repName}"
+        sh "docker push ${repName}/${imgName}"
     }
 }
 
