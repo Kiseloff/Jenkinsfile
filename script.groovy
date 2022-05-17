@@ -7,6 +7,7 @@ def getSrc() {
 
 def buildJar() {
     echo "building the app..."
+    sh 'pwd'
     sh 'mvn package'
 }
 
