@@ -1,7 +1,7 @@
 def getSrc() {
     echo "getting the sources..."
-    sh 'rm -rf ./*'
-    sh 'git clone -b jenkins-jobs https://gitlab.com/nanuchi/java-maven-app.git .'
+    sh 'git clone -b jenkins-jobs https://gitlab.com/nanuchi/java-maven-app.git ./project'
+    sh 'cd ./project'
 }
 
 def buildJar() {
