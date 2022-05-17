@@ -1,16 +1,16 @@
-def getSrc() {
+def getSrc(PROJECT_PATH) {
     echo "getting the sources..."
     echo "${PROJECT_PATH}"
     sh "rm -rf ${PROJECT_PATH}"
     sh "git clone -b jenkins-jobs https://gitlab.com/nanuchi/java-maven-app.git ${PROJECT_PATH}"
 }
 
-def buildJar() {
+def buildJar(PROJECT_PATH) {
     echo "building the app..."
     sh "mvn package -f ${PROJECT_PATH}"
 }
 
-def buildImage() {
+def buildImage(PROJECT_PATH) {
     echo "building the docker image..."
     withCredentials([usernamePassword(credentialsId: 'nexus-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
         sh 'ls -la'
