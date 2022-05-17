@@ -1,4 +1,5 @@
 def gv
+def projectPath = "./project"
 
 pipeline{
     agent any
