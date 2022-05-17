@@ -1,5 +1,7 @@
 def gv
-def PROJECT_PATH = "./project"
+def projectPath = "./project"
+def repName = "192.168.88.14:8083"
+def imgName= "java-maven-app:4.1"
 
 pipeline{
     agent any
@@ -17,21 +19,21 @@ pipeline{
         stage("get sources") {
             steps{
                 script {
-                    gv.getSrc("${PROJECT_PATH}")
+                    gv.getSrc("${projectPath}")
                 }
             }
         }
         stage("build jar") {
             steps{
                 script {
-                    gv.buildJar("${PROJECT_PATH}")
+                    gv.buildJar("${projectPath}")
                 }
             }
         }
         stage("build image") {
             steps{
                 script {
-                    gv.buildImage("${PROJECT_PATH}")
+                    gv.buildImage("${repName}", "${imgName}", "${projectPath}")
                 }
             }
         }
