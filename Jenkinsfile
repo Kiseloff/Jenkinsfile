@@ -17,21 +17,21 @@ pipeline{
         stage("get sources") {
             steps{
                 script {
-                    gv.getSrc()
+                    gv.getSrc("${PROJECT_PATH}")
                 }
             }
         }
         stage("build jar") {
             steps{
                 script {
-                    gv.buildJar()
+                    gv.buildJar("${PROJECT_PATH}")
                 }
             }
         }
         stage("build image") {
             steps{
                 script {
-                    gv.buildImage()
+                    gv.buildImage("${PROJECT_PATH}")
                 }
             }
         }
