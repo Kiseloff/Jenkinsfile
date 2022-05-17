@@ -10,15 +10,12 @@ pipeline{
             steps {
                 script {
                     gv = load "script.groovy"
-                    sh 'ls -la'
-                    echo "========="
                 }
             }
         }
         stage("get sources") {
             steps{
                 script {
-                    sh 'ls -la'
                     gv.getSrc()
                 }
             }
