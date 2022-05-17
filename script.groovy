@@ -7,14 +7,14 @@ def getSrc() {
 
 def buildJar() {
     echo "building the app..."
-    sh 'ls -la'
-    sh 'mvn package ./project'
+    sh 'mvn package -f ./project'
 }
 
 def buildImage() {
     echo "building the docker image..."
     withCredentials([usernamePassword(credentialsId: 'nexus-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-        sh 'docker build -t 192.168.88.14:8083/java-maven-app:3.0 .'
+        sh 'ls -la'
+        sh 'docker build -t 192.168.88.14:8083/java-maven-app:4.0 .'
         sh "echo $PASS | docker login -u $USER --password-stdin 192.168.88.14:8083"
         sh 'docker push 192.168.88.14:8083/java-maven-app:3.0'
     }
