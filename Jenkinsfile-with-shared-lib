@@ -3,6 +3,8 @@
 @Library('jenkins-shared-library')
 def gv
 def PROJECT_PATH = "./project"
+def repName = "192.168.88.14:8083"
+def imgName= "java-maven-app:4.0"
 
 pipeline{
     agent any
@@ -34,7 +36,7 @@ pipeline{
         stage("build image") {
             steps{
                 script {
-                    buildImage("${PROJECT_PATH}")
+                    buildImage("${repName}", "${imgName}", "${PROJECT_PATH}")
                 }
             }
         }
