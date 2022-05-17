@@ -36,7 +36,7 @@ pipeline{
         stage("build image") {
             steps{
                 script {
-                    buildImage("${repName}", "${imgName}", "${PROJECT_PATH}")
+                    buildImage("${repName}", "${imgName}", "${projectPath}")
                 }
             }
         }
