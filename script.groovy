@@ -18,9 +18,9 @@ def buildImage(String repName, String imgName, String projectPath) {
         //sh "docker build -t 192.168.88.14:8083/java-maven-app:4.0 ${projectPath}"
         //sh "echo $PASS | docker login -u $USER --password-stdin 192.168.88.14:8083"
         //sh 'docker push 192.168.88.14:8083/java-maven-app:4.0'
-        sh "docker build -t ${repName}/${imgName} ${projectPath}"
+        sh "docker build -t ${repName}/${imgName}:${IMAGE_NAME} ${projectPath}"
         sh "echo $PASS | docker login -u $USER --password-stdin ${repName}"
-        sh "docker push ${repName}/${imgName}"
+        sh "docker push ${repName}/${imgName}:${IMAGE_NAME}"
     }
 }
 
