@@ -9,7 +9,7 @@ def buildJar(projectPath) {
     sh "mvn build-helper:parse-version versions:set \
         -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} \
         versions:commit -f ${projectPath}"
-    def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
+    def matcher = readFile("${projectPath}/pom.xml") =~ '<version>(.+)</version>'
     def version = matcher[0][1]
     env.IMAGE_VER = "$version-$BUILD_NUMBER"
     
