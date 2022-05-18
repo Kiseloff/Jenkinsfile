@@ -4,15 +4,17 @@ def getSrc(projectPath) {
     sh "git clone -b jenkins-jobs https://gitlab.com/nanuchi/java-maven-app.git ${projectPath}"
 }
 
-def buildJar(projectPath) {
+def incrementVer(projectPath) {
     echo "incrementing app version..."
     sh "mvn build-helper:parse-version versions:set \
         -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} \
         versions:commit -f ${projectPath}"
     def matcher = readFile("${projectPath}/pom.xml") =~ '<version>(.+)</version>'
     def version = matcher[0][1]
-    env.IMAGE_VER = "$version-$BUILD_NUMBER"
-    
+    env.IMAGE_VER = "${version}-$BUILD_NUMBER"
+}
+
+def buildJar(projectPath) {
     echo "building the app..."
     sh "mvn package -f ${projectPath}"
 }
