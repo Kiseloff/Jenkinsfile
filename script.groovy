@@ -5,10 +5,15 @@ def getSrc(projectPath) {
 }
 
 def buildJar(projectPath) {
-    echo "building the app..."
+    echo "incrementing app version..."
     sh "mvn build-helper:parse-version versions:set \
         -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} \
         versions:commit"
+    def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
+    def version = matcher[0][1]
+    env.IMAGE_VER = "$version-$BUILD_NUMBER"
+    
+    echo "building the app..."
     sh "mvn package -f ${projectPath}"
 }
 
@@ -18,9 +23,10 @@ def buildImage(String repName, String imgName, String projectPath) {
         //sh "docker build -t 192.168.88.14:8083/java-maven-app:4.0 ${projectPath}"
         //sh "echo $PASS | docker login -u $USER --password-stdin 192.168.88.14:8083"
         //sh 'docker push 192.168.88.14:8083/java-maven-app:4.0'
-        sh "docker build -t ${repName}/${imgName}:${IMAGE_NAME} ${projectPath}"
+        
+        sh "docker build -t ${repName}/${imgName}:${IMAGE_VER} ${projectPath}"
         sh "echo $PASS | docker login -u $USER --password-stdin ${repName}"
-        sh "docker push ${repName}/${imgName}:${IMAGE_NAME}"
+        sh "docker push ${repName}/${imgName}:${IMAGE_VER}"
     }
 }
 
