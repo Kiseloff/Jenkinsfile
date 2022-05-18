@@ -1,7 +1,7 @@
 def gv
 def projectPath = "./project"
 def repName = "192.168.88.14:8083"
-def imgName= "java-maven-app:4.1"
+def imgName= "java-maven-app"
 
 pipeline{
     agent any
