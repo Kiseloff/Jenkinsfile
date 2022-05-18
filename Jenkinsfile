@@ -23,6 +23,13 @@ pipeline{
                 }
             }
         }
+        stage("increment ver") {
+            steps{
+                script {
+                    gv.incrementVer("${projectPath}")
+                }
+            }
+        }
         stage("build jar") {
             steps{
                 script {
